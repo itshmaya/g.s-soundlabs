@@ -130,13 +130,10 @@ const Hero = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="inline-block px-3 py-1 bg-brand-orange/20 border border-brand-orange/30 text-brand-orange text-xs font-bold uppercase tracking-[0.3em] mb-6">
-              Boutique Sound Design Studio
-            </span>
             <h1 className="text-6xl md:text-8xl font-bold leading-[0.9] mb-8 tracking-tighter">
-              WE SHAPE THE <br />
+              WE DESIGN SOUND <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-brand-orange/50">
-                SOUND OF MODERN
+                FOR MODERN MEDIA.
               </span> <br />
               MEDIA.
             </h1>
