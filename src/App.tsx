@@ -68,10 +68,8 @@ const Navbar = () => {
             </a>
           ))}
           <a 
-            href="#contact" 
-            className="px-5 py-2 bg-white text-brand-black text-sm font-bold uppercase tracking-widest hover:bg-brand-orange hover:text-white transition-all"
-          >
-            Get in Touch
+            href="#contact"           >
+            Contact
           </a>
         </div>
 
@@ -135,10 +133,10 @@ const Hero = () => {
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-brand-orange/50">
                 FOR MODERN MEDIA.
               </span> <br />
-              MEDIA.
             </h1>
             <p className="text-xl text-white/60 max-w-2xl mb-10 leading-relaxed">
-              We design sound for brands, agencies, and tech — crafting clean, modern audio that makes an impact.
+                Sound design for brands, agencies, and tech.
+
             </p>
             <div className="flex flex-wrap gap-6">
               <a 
