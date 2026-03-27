@@ -67,10 +67,6 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
-          <a 
-            href="#contact"           >
-            Contact
-          </a>
         </div>
 
         {/* Mobile Toggle */}
