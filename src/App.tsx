@@ -343,19 +343,18 @@ const ContactSection = () => {
           </h2>
 
           <p className="text-xl text-brand-black/70 mb-12 max-w-2xl mx-auto">
-            Have a project in mind? We’d love to hear about it.  
-            From commercials to digital and product sound — we design audio that makes an impact.
+            Have a project in mind?
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 mb-16 text-brand-black">
             <div>
               <p className="font-bold">Itamar Shmaya</p>
-              <p className="text-sm opacity-70">Sound Designer</p>
+              <p className="text-sm opacity-70">Co-Founder</p>
             </div>
 
             <div>
               <p className="font-bold">Michael Gissin</p>
-              <p className="text-sm opacity-70">Sound Designer</p>
+              <p className="text-sm opacity-70">Co-Founder</p>
             </div>
           </div>
 <div className="mt-6">
