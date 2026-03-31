@@ -173,11 +173,6 @@ const WorkSection = () => {
             <span className="text-brand-orange text-xs font-bold uppercase tracking-[0.3em] mb-4 block">
               Selected Projects
             </span>
-            <h2 className="text-5xl md:text-6xl font-bold tracking-tighter">SOUND IN ACTION.</h2>
-          </div>
-          <p className="text-white/50 max-w-md text-right hidden md:block">
-            A selection of our recent work across commercials, brand films, and digital experiences.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
