@@ -173,8 +173,7 @@ const WorkSection = () => {
             <span className="text-brand-orange text-xs font-bold uppercase tracking-[0.3em] mb-4 block">
               Selected Projects
             </span>
-        </div>
-
+        </div>        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {PROJECTS.map((project, index) => (
             <motion.div 
@@ -294,7 +293,6 @@ const AboutSection = () => {
             <span className="text-brand-orange text-xs font-bold uppercase tracking-[0.3em] mb-4 block">
               ABOUT US
             </span>
-</h2>
             <div className="space-y-6 text-white/60 text-lg leading-relaxed">
               <p>
                 G.S SoundLabs is a boutique sound design studio founded by Itamar Shmaya and Michael Gissin.
