@@ -292,17 +292,16 @@ const AboutSection = () => {
 
           <div>
             <span className="text-brand-orange text-xs font-bold uppercase tracking-[0.3em] mb-4 block">
-              Our Approach
+              ABOUT US
             </span>
-            <h2 className="text-5xl font-bold tracking-tighter mb-8">  SOUND THAT DEFINES BRANDS.
 </h2>
             <div className="space-y-6 text-white/60 text-lg leading-relaxed">
               <p>
                 G.S SoundLabs is a boutique sound design studio founded by Itamar Shmaya and Michael Gissin.
               </p>
               <p>
-                We create sound for commercials, digital content, and tech — 
-                combining creative thinking with technical precision to deliver clean, modern, and impactful audio.
+                We create sound, audio and music for advertising, TV, films, software, games, apps — 
+                and any other creative purpose.
               </p>
               <div className="pt-6 grid grid-cols-2 gap-8">
                 <div>
