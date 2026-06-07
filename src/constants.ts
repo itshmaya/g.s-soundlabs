@@ -11,7 +11,7 @@ export const PROJECTS: Project[] = [
     id: "1",
     title: "Freesbe",
     client: "TV Campaign",
-    vimeoId: "1174836160",
+    vimeoId: "1182385582",
   },
   {
     id: "2",
