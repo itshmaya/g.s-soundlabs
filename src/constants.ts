@@ -9,8 +9,8 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     id: "1",
-    title: "Better Safe Than Neutered",
-    client: "Short Film",
+    title: "Freesbe",
+    client: "TV Campaign",
     vimeoId: "1174836160",
   },
   {
