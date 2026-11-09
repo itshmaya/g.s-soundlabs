@@ -1,12 +1,12 @@
 /** SPDX-License-Identifier: Apache-2.0 */
 import { useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, AudioLines, Menu, Play, X } from "lucide-react";
+import { ArrowUpRight, AudioLines, Menu, Play, X } from "lucide-react";
 import { PROJECTS, SERVICES, type Project } from "./constants";
 
 const EMAIL = "gs.soundlabs@gmail.com";
 const selectedIds = ["4", "2", "1", "3", "7", "10"];
 const selectedProjects = selectedIds.flatMap((id) => PROJECTS.filter((project) => project.id === id));
-const otherProjects = PROJECTS.filter((project) => !selectedIds.includes(project.id));
+const galleryProjects = [...selectedProjects, ...PROJECTS.filter((project) => !selectedIds.includes(project.id))];
 const navLinks = [
   { title: "Work", href: "#work" },
   { title: "Services", href: "#services" },
@@ -122,7 +122,6 @@ function ProjectCard({ project, onPlay, eager = false }: {
 
 export default function App() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
-  const [showArchive, setShowArchive] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
 
   function play(project: Project) {
@@ -145,17 +144,8 @@ export default function App() {
             <span className="work-note"><AudioLines size={16} aria-hidden="true" /> Play with sound</span>
           </div>
           <div className="project-grid">
-            {selectedProjects.map((project, index) => <ProjectCard key={project.id} project={project} onPlay={play} eager={index < 2} />)}
+            {galleryProjects.map((project, index) => <ProjectCard key={project.id} project={project} onPlay={play} eager={index < 2} />)}
           </div>
-          <div id="work-archive" hidden={!showArchive}>
-            {showArchive && <div className="project-grid archive-grid">
-              {otherProjects.map((project) => <ProjectCard key={project.id} project={project} onPlay={play} />)}
-            </div>}
-          </div>
-          <button className="button button-outline archive-button" aria-expanded={showArchive} aria-controls="work-archive" onClick={() => setShowArchive(!showArchive)}>
-            {showArchive ? "Show fewer projects" : "Show more projects"}
-            <ArrowDown size={17} className={showArchive ? "flipped" : undefined} aria-hidden="true" />
-          </button>
         </section>
 
         <section id="services" className="section services" aria-labelledby="services-heading">
