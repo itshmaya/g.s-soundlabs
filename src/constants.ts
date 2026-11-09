@@ -3,7 +3,7 @@ export interface Project {
   title: string;
   client: string;
   vimeoId: string;
-  description?: string;
+  edition?: string;
 }
 
 export const PROJECTS: Project[] = [
@@ -16,7 +16,7 @@ export const PROJECTS: Project[] = [
   {
     id: "2",
     title: "Lightricks",
-    client: "Brand Campaign",
+    client: "Die Young",
     vimeoId: "1174837184",
   },
   {
@@ -28,26 +28,29 @@ export const PROJECTS: Project[] = [
   {
     id: "4",
     title: "Lemonade & Google",
-    client: "Collaboration",
+    client: "Pet insurance campaign",
     vimeoId: "1174841840",
-  },
-  {
-    id: "5",
-    title: "Lemonade & Google",
-    client: "Collaboration",
-    vimeoId: "1174845298",
-  },
-  {
-    id: "6",
-    title: "Lemonade & Google",
-    client: "Collaboration",
-    vimeoId: "1174844060",
+    edition: "Film 01",
   },
   {
     id: "7",
     title: "Papaya Global",
     client: "Brand Identity",
     vimeoId: "1174835414",
+  },
+  {
+    id: "5",
+    title: "Lemonade & Google",
+    client: "Pet insurance campaign",
+    vimeoId: "1174845298",
+    edition: "Film 02",
+  },
+  {
+    id: "6",
+    title: "Lemonade & Google",
+    client: "Pet insurance campaign",
+    vimeoId: "1174844060",
+    edition: "Film 03",
   },
   {
     id: "8",
@@ -71,27 +74,15 @@ export const PROJECTS: Project[] = [
 
 export const SERVICES = [
   {
-    title: "Sound Design",
-    description: "Bespoke audio for commercials across TV, digital, and social platforms.",
+    title: "Sound design",
+    description: "Sound effects, atmospheres and textures shaped to the edit, from product details to full soundscapes.",
   },
   {
-    title: "Sonic Branding",
-    description: "Creating unique audio identities that define and elevate modern brands.",
+    title: "Music production",
+    description: "Original music for commercials, brand films and animation, built around the pace and mood of the picture.",
   },
   {
-    title: "Voiceover Production",
-    description: "Professional recording, editing, and processing for crystal clear narration.",
-  },
-  {
-    title: "Sound for Film",
-    description: "Immersive soundscapes for animation, AI, and live-action short films.",
-  },
-  {
-    title: "Interactive Audio",
-    description: "Dynamic sound solutions for games and interactive experiences.",
-  },
-  {
-    title: "UI/UX Sound",
-    description: "Functional and aesthetic product sound design for tech companies.",
+    title: "Voice & mix",
+    description: "Voiceover recording and editing, dialogue cleanup, final mixing and alternate versions for delivery.",
   },
 ];

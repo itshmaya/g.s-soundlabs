@@ -1,403 +1,234 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
+/** SPDX-License-Identifier: Apache-2.0 */
+import { useRef, useState } from "react";
+import { ArrowDown, ArrowUpRight, AudioLines, Menu, Play, X } from "lucide-react";
+import { PROJECTS, SERVICES, type Project } from "./constants";
 
-import { motion, useScroll, useTransform } from "motion/react";
-import { 
-  Volume2, 
-  Mic2, 
-  Music, 
-  Film, 
-  Gamepad2, 
-  Smartphone, 
-  ArrowRight, 
-  Play,
-  Menu,
-  X,
-  ExternalLink,
-  ChevronRight
-} from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-import { cn } from "@/src/lib/utils";
-import { PROJECTS, SERVICES } from "./constants";
+const EMAIL = "gs.soundlabs@gmail.com";
+const selectedIds = ["4", "2", "1", "3", "7", "10"];
+const selectedProjects = selectedIds.flatMap((id) => PROJECTS.filter((project) => project.id === id));
+const otherProjects = PROJECTS.filter((project) => !selectedIds.includes(project.id));
+const navLinks = [
+  { title: "Work", href: "#work" },
+  { title: "Services", href: "#services" },
+  { title: "Studio", href: "#about" },
+];
 
-const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+const brands = [
+  { name: "Google", file: "google" },
+  { name: "Lemonade", file: "lemonade" },
+  { name: "Lightricks", file: "lightricks" },
+  { name: "Sweet Security", file: "sweet" },
+  { name: "Papaya Global", file: "papaya" },
+  { name: "Freesbe", file: "freesbe", boxed: true },
+  { name: "Oral-B", file: "oralb", boxed: true },
+  { name: "P&G", file: "pg" },
+  { name: "Old Spice", file: "oldspice" },
+  { name: "Keshet 12", file: "keshet" },
+  { name: "Reshet 13", file: "reshet", boxed: true },
+  { name: "Kan 11", file: "kan" },
+  { name: "Sebocalm", file: "sebocalm" },
+  { name: "Overwolf", file: "overwolf" },
+  { name: "Steimatzky", file: "steimatzky", boxed: true },
+  { name: "Playo", file: "playo" },
+];
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+function BrandStrip() {
+  return (
+    <section id="brands" className="shell brand-strip" aria-labelledby="brands-heading">
+      <h2 id="brands-heading">Brands our team has worked with</h2>
+      <ul className="brand-list" role="list">
+        {brands.map(({ name, file, boxed }) => (
+          <li key={file}>
+            <img className={boxed ? "brand-logo brand-logo-boxed" : "brand-logo"}
+              src={`/brands/${file}.png`} alt={name} width={264} height={132} loading="lazy" decoding="async" />
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
 
-  const navLinks = [
-    { name: "Work", href: "#work" },
-    { name: "Services", href: "#services" },
-    { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
-  ];
+function Wordmark() {
+  return <span className="wordmark"><img src="/gs-mark.svg" width="27" height="27" alt="" /> G.S SoundLabs</span>;
+}
+
+function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav 
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4",
-        isScrolled ? "bg-brand-black/80 backdrop-blur-md border-b border-white/10" : "bg-transparent"
-      )}
-    >
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <a href="#" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 bg-brand-orange flex items-center justify-center rounded-sm transform group-hover:rotate-12 transition-transform">
-            <Volume2 className="text-white w-6 h-6" />
-          </div>
-          <span className="font-display font-bold text-xl tracking-tighter">
-            G.S <span className="text-brand-orange">SOUNDLABS</span>
-          </span>
-        </a>
-
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href}
-              className="text-sm font-medium text-white/70 hover:text-brand-orange transition-colors uppercase tracking-widest"
-            >
-              {link.name}
-            </a>
+    <header className="site-header" onKeyDown={(event) => {
+      if (event.key === "Escape" && menuOpen) {
+        setMenuOpen(false);
+        event.currentTarget.querySelector<HTMLButtonElement>(".menu-toggle")?.focus();
+      }
+    }}>
+      <div className="shell header-inner">
+        <a href="#top" aria-label="G.S SoundLabs home" onClick={() => setMenuOpen(false)}><Wordmark /></a>
+        <button
+          className="menu-toggle"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-controls="main-nav"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >{menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
+        <nav id="main-nav" className={menuOpen ? "is-open" : ""} aria-label="Main navigation">
+          {navLinks.map(({ title, href }) => (
+            <a key={href} href={href} onClick={() => setMenuOpen(false)}>{title}</a>
           ))}
-        </div>
-
-        {/* Mobile Toggle */}
-        <button 
-          className="md:hidden text-white"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X /> : <Menu />}
-        </button>
+          <a className="header-contact" href="#contact" onClick={() => setMenuOpen(false)}>
+            Let’s talk <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
+        </nav>
       </div>
-
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="absolute top-full left-0 right-0 bg-brand-black border-b border-white/10 p-6 md:hidden"
-        >
-          <div className="flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-medium text-white/70 hover:text-brand-orange transition-colors"
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-        </motion.div>
-      )}
-    </nav>
+    </header>
   );
-};
+}
 
-const Hero = () => {
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+function ProjectCard({ project, onPlay, eager = false }: {
+  project: Project;
+  onPlay: (project: Project) => void;
+  eager?: boolean;
+}) {
+  const [posterFailed, setPosterFailed] = useState(false);
+  const projectLabel = project.edition ? `${project.title} — ${project.edition}` : project.title;
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Elements */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-brand-orange/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-500/10 blur-[120px] rounded-full" />
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20" />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 className="text-6xl md:text-8xl font-bold leading-[0.9] mb-8 tracking-tighter">
-              WE DESIGN SOUND <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-brand-orange/50">
-                FOR MODERN MEDIA.
-              </span> <br />
-            </h1>
-            <p className="text-xl text-white/60 max-w-2xl mb-10 leading-relaxed">
-                Sound design for brands, agencies, and tech.
-
-            </p>
-            <div className="flex flex-wrap gap-6">
-              <a 
-                href="#work" 
-                className="group flex items-center gap-3 bg-brand-orange px-8 py-4 text-white font-bold uppercase tracking-widest hover:bg-white hover:text-brand-black transition-all"
-              >
-                View Our Work
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Floating Geometric Element */}
-      <motion.div 
-        style={{ y: y1, opacity }}
-        className="absolute right-[10%] top-[20%] hidden lg:block"
-      >
-        <div className="relative w-64 h-64">
-          <div className="absolute inset-0 border-2 border-brand-orange/30 rotate-45 transform-gpu animate-pulse" />
-          <div className="absolute inset-4 border border-white/10 -rotate-12 transform-gpu" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Volume2 className="w-16 h-16 text-brand-orange/50" />
-          </div>
-        </div>
-      </motion.div>
-    </section>
-  );
-};
-
-const WorkSection = () => {
-  return (
-    <section id="work" className="py-24 relative bg-brand-gray/30">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-          <div>
-            <span className="text-brand-orange text-xs font-bold uppercase tracking-[0.3em] mb-4 block">
-              Selected Projects
-            </span>
-        </div>        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {PROJECTS.map((project, index) => (
-            <motion.div 
-              key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group relative"
-            >
-              <div className="aspect-video bg-brand-black overflow-hidden relative border border-white/5">
-                <iframe
-src={`https://player.vimeo.com/video/${project.vimeoId}?background=0&autoplay=0&loop=0&byline=0&title=0&portrait=0`}                  className="absolute inset-0 w-full h-full"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  title={project.title}
-                />
-              </div>
-              <div className="mt-6 flex justify-between items-start">
-                <div>
-                  <h3 className="text-xl font-bold tracking-tight group-hover:text-brand-orange transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-white/40 uppercase tracking-widest mt-1">
-                    {project.client}
-                  </p>
-                </div>
-                <a 
-                  href={`https://vimeo.com/${project.vimeoId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 border border-white/10 hover:bg-brand-orange hover:border-brand-orange transition-all"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const ServicesSection = () => {
-  const icons = [Volume2, Music, Mic2, Film, Gamepad2, Smartphone];
-
-  return (
-    <section id="services" className="py-24 relative overflow-hidden">
-      {/* Diagonal Background */}
-      <div className="absolute inset-0 bg-brand-black z-0" />
-      <div className="absolute inset-0 bg-brand-orange/5 skew-y-3 origin-right z-0" />
-
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-3xl mb-16">
-          <span className="text-brand-orange text-xs font-bold uppercase tracking-[0.3em] mb-4 block">
-            What We Do
+    <article className="project">
+      <button className="project-button" onClick={() => onPlay(project)} aria-label={`Play ${projectLabel}`}>
+        <span className={`project-media tone-${(Number(project.id) - 1) % 5}`}>
+          <span className="cover" aria-hidden="true">
+            <span className="cover-grid" />
+            <span className="cover-name">{project.title}</span>
           </span>
-          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8">
-            ELEVATING BRANDS <br />
-            THROUGH SOUND.
-          </h2>
-          <p className="text-xl text-white/60 leading-relaxed">
-            From sonic branding to interactive game audio, we provide comprehensive sound solutions 
-            tailored for modern media platforms.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 border border-white/10">
-          {SERVICES.map((service, index) => {
-            const Icon = icons[index % icons.length];
-            return (
-              <div 
-                key={service.title}
-                className="bg-brand-black p-10 hover:bg-brand-orange/5 transition-colors group"
-              >
-                <div className="w-12 h-12 bg-brand-orange/10 flex items-center justify-center mb-8 group-hover:bg-brand-orange transition-colors">
-                  <Icon className="text-brand-orange group-hover:text-white transition-colors" />
-                </div>
-                <h3 className="text-2xl font-bold mb-4 tracking-tight">{service.title}</h3>
-                <p className="text-white/50 leading-relaxed">
-                  {service.description}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+          {!posterFailed && <img
+            src={`/posters/${project.vimeoId}.jpg`}
+            alt=""
+            width={1200}
+            height={675}
+            loading={eager ? "eager" : "lazy"}
+            decoding="async"
+            onError={() => setPosterFailed(true)}
+          />}
+          <span className="play-icon" aria-hidden="true"><Play size={17} fill="currentColor" /></span>
+        </span>
+        <span className="project-caption">
+          <span className="project-title">{project.title}</span>
+          <span className="project-type">{project.client}{project.edition ? ` · ${project.edition}` : ""}</span>
+        </span>
+      </button>
+    </article>
   );
-};
-
-const AboutSection = () => {
-  return (
-    <section id="about" className="py-24 bg-brand-black relative">
-      <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <div className="relative">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="aspect-square bg-brand-gray relative overflow-hidden"
-            >
-              <img 
-                src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=1000" 
-                alt="Studio setup" 
-                className="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-black to-transparent" />
-            </motion.div>
-            {/* Geometric Overlay */}
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 border-8 border-brand-orange/20 hidden md:block" />
-          </div>
-
-          <div>
-            <span className="text-brand-orange text-xs font-bold uppercase tracking-[0.3em] mb-4 block">
-              ABOUT US
-            </span>
-            <div className="space-y-6 text-white/60 text-lg leading-relaxed">
-              <p>
-                G.S SoundLabs is a boutique sound design studio founded by Itamar Shmaya and Michael Gissin.
-              </p>
-              <p>
-                We create sound, audio and music for advertising, TV, films, software, games, apps — 
-                and any other creative purpose.
-              </p>
-              <div className="pt-6 grid grid-cols-2 gap-8">
-                <div>
-                  <h4 className="text-white font-bold mb-2">Boutique & Focused</h4>
-                  <p className="text-sm">Small team, high attention to detail.</p>
-                </div>
-                <div>
-                  <h4 className="text-white font-bold mb-2">Fast & Flexible  
-</h4>
-                  <p className="text-sm">Quick, responsive workflow tailored to each project.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const ContactSection = () => {
-  return (
-    <section id="contact" className="py-24 bg-brand-orange relative overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
-      </div>
-      
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          
-          <h2 className="text-5xl md:text-7xl font-bold tracking-tighter text-brand-black mb-8">
-            LET’S TALK
-          </h2>
-
-          <p className="text-xl text-brand-black/70 mb-12 max-w-2xl mx-auto">
-            Have a project in mind?
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-8 mb-16 text-brand-black">
-            <div>
-              <p className="font-bold">Itamar Shmaya</p>
-              <p className="text-sm opacity-70">Co-Founder</p>
-            </div>
-
-            <div>
-              <p className="font-bold">Michael Gissin</p>
-              <p className="text-sm opacity-70">Co-Founder</p>
-            </div>
-          </div>
-<div className="mt-6">
-  <p className="text-sm uppercase tracking-widest text-brand-black/60 mb-3">
-    Contact
-  </p>
-  <p className="inline-block text-3xl md:text-4xl font-bold tracking-tight text-brand-black transition-all duration-300 hover:opacity-70 hover:-translate-y-0.5 cursor-default">
-    gs.soundlabs@gmail.com
-  </p>
-</div>
-
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const Footer = () => {
-  return (
-    <footer className="bg-brand-black py-12 border-t border-white/5">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-brand-orange flex items-center justify-center rounded-sm">
-              <Volume2 className="text-white w-5 h-5" />
-            </div>
-            <span className="font-display font-bold text-lg tracking-tighter">
-              G.S <span className="text-brand-orange">SOUNDLABS</span>
-            </span>
-          </div>
-
-
-          <p className="text-xs text-white/30 tracking-widest uppercase">
-            &copy; {new Date().getFullYear()} G.S SoundLabs. All Rights Reserved.
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-};
+}
 
 export default function App() {
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [showArchive, setShowArchive] = useState(false);
+  const dialog = useRef<HTMLDialogElement>(null);
+
+  function play(project: Project) {
+    dialog.current?.showModal();
+    setActiveProject(project);
+  }
+
   return (
-    <div className="bg-brand-black min-h-screen">
-      <Navbar />
-      <Hero />
-      <WorkSection />
-      <ServicesSection />
-      <AboutSection />
-      <ContactSection />
-      <Footer />
+    <div id="top">
+      <a className="skip-link" href="#content">Skip to content</a>
+      <Header />
+      <main id="content">
+        <section className="shell hero" aria-labelledby="hero-heading">
+          <h1 id="hero-heading">Sound for picture.</h1>
+          <p className="hero-description">Sound design, original music and mixing for commercials, product films and animation.</p>
+        </section>
+
+        <section id="work" className="shell section work" aria-labelledby="work-heading">
+          <div className="work-heading">
+            <h2 id="work-heading">Selected work</h2>
+            <span className="work-note"><AudioLines size={16} aria-hidden="true" /> Play with sound</span>
+          </div>
+          <div className="project-grid">
+            {selectedProjects.map((project, index) => <ProjectCard key={project.id} project={project} onPlay={play} eager={index < 2} />)}
+          </div>
+          <div id="work-archive" hidden={!showArchive}>
+            {showArchive && <div className="project-grid archive-grid">
+              {otherProjects.map((project) => <ProjectCard key={project.id} project={project} onPlay={play} />)}
+            </div>}
+          </div>
+          <button className="button button-outline archive-button" aria-expanded={showArchive} aria-controls="work-archive" onClick={() => setShowArchive(!showArchive)}>
+            {showArchive ? "Show fewer projects" : "Show more projects"}
+            <ArrowDown size={17} className={showArchive ? "flipped" : undefined} aria-hidden="true" />
+          </button>
+        </section>
+
+        <section id="services" className="section services" aria-labelledby="services-heading">
+          <div className="shell">
+            <div className="section-heading">
+              <div><p className="eyebrow">What we do</p><h2 id="services-heading">From cut to final mix</h2></div>
+              <p>Bring us in for one part of the job or the whole soundtrack.</p>
+            </div>
+            <div className="service-list">
+              {SERVICES.map((service) => (
+                <article key={service.title} className="service">
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="about" className="shell section studio" aria-labelledby="about-heading">
+          <div>
+            <p className="eyebrow">The studio</p>
+            <h2 id="about-heading">Meet the people<br className="studio-break" /> behind the sound</h2>
+          </div>
+          <div className="studio-copy">
+            <p>We’re <strong>Itamar Shmaya</strong> and <strong>Michael Gissin</strong>, the two people behind G.S SoundLabs. We work with producers, agencies and creative teams from the first storyboard through to the final mix.</p>
+          </div>
+        </section>
+
+        <section id="contact" className="contact" aria-labelledby="contact-heading">
+          <div className="shell contact-inner">
+            <div>
+              <p className="eyebrow">Contact</p>
+              <h2 id="contact-heading">Let’s talk sound.</h2>
+              <p>Send us a brief, a rough cut, or a few lines about what you’re making.</p>
+            </div>
+            <a className="button contact-button" href={`mailto:${EMAIL}`}>
+              {EMAIL} <ArrowUpRight size={18} aria-hidden="true" />
+            </a>
+          </div>
+        </section>
+
+        <BrandStrip />
+      </main>
+      <footer className="shell footer">
+        <a href="#top"><Wordmark /></a>
+        <small>© {new Date().getFullYear()} G.S SoundLabs</small>
+      </footer>
+
+      <dialog className="player-dialog" ref={dialog} aria-labelledby="player-title"
+        onClose={() => setActiveProject(null)}
+        onClick={(event) => { if (event.target === event.currentTarget) event.currentTarget.close(); }}
+      >
+        <div className="player-panel">
+          <div className="player-header">
+            <h2 id="player-title">{activeProject?.title}{activeProject?.edition ? ` — ${activeProject.edition}` : ""}</h2>
+            <form method="dialog"><button className="player-close" aria-label="Close video"><X aria-hidden="true" /></button></form>
+          </div>
+          {activeProject && <>
+            <iframe
+              className="video-player"
+              src={`https://player.vimeo.com/video/${activeProject.vimeoId}?autoplay=1&title=0&byline=0&portrait=0&dnt=1`}
+              title={`${activeProject.title} video`}
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+            />
+            <a className="player-link" href={`https://vimeo.com/${activeProject.vimeoId}`} target="_blank" rel="noopener noreferrer">
+              Open on Vimeo <ArrowUpRight size={15} aria-hidden="true" />
+            </a>
+          </>}
+        </div>
+      </dialog>
     </div>
   );
 }
