@@ -136,8 +136,7 @@ export default function App() {
       <Header />
       <main id="content">
         <section className="shell hero" aria-labelledby="hero-heading">
-          <h1 id="hero-heading">Sound for picture.</h1>
-          <p className="hero-description">Sound design, original music and mixing for commercials, product films and animation.</p>
+          <h1 id="hero-heading">We create music, design sound and mix audio for commercials, product films and animation.</h1>
         </section>
 
         <section id="work" className="shell section work" aria-labelledby="work-heading">

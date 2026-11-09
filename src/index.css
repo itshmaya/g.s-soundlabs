@@ -38,11 +38,10 @@ img { display: block; max-width: 100%; }
 .header-contact { min-height: 44px; padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; }
 .menu-toggle { display: none; }
 
-.hero { padding-block: clamp(36px, 4.5vw, 68px) clamp(34px, 4vw, 58px); }
+.hero { padding-block: clamp(36px, 5vw, 66px) clamp(32px, 4.5vw, 58px); }
 .eyebrow { color: var(--muted); font-size: 13px; font-weight: 680; line-height: 1.5; }
 h1, h2, h3 { font-weight: 690; letter-spacing: -.035em; }
-h1 { font-size: clamp(44px, 6.05vw, 89px); line-height: 1.05; font-weight: 620; letter-spacing: -.046em; word-spacing: .02em; }
-.hero-description { margin-top: 19px; max-width: 53ch; font-size: clamp(17px, 1.7vw, 23px); line-height: 1.53; color: var(--muted); text-wrap: pretty; }
+.hero h1 { max-width: 38ch; font-size: clamp(25px, 3vw, 41px); line-height: 1.28; font-weight: 620; letter-spacing: -.035em; text-wrap: pretty; }
 .button { display: inline-flex; justify-content: center; align-items: center; gap: 11px; min-height: 47px; padding: 11px 17px; border: 1px solid transparent; border-radius: 999px; font-size: 14px; font-weight: 750; line-height: 1.4; transition: background-color .18s, color .18s; }
 
 .section { padding-block: clamp(48px, 7.5vw, 106px); }
@@ -134,8 +133,6 @@ body:has(.player-dialog[open]) { overflow: hidden; }
   .header-inner nav a { min-height: 44px; display: flex; align-items: center; }
   .header-contact { margin-top: 4px; justify-self: start; }
   .hero { padding-block: 33px 30px; }
-  h1 { font-size: clamp(37px, 9.2vw, 58px); }
-  .hero-description { margin-top: 13px; }
   .section-heading, .studio { grid-template-columns: 1fr; }
   .section-heading { margin-bottom: 21px; }
   .project-grid { grid-template-columns: 1fr; gap: 24px; }
